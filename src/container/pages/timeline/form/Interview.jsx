@@ -1,0 +1,132 @@
+import React, { Component, Fragment } from 'react';
+import { Container, Row, Col, Card, Form, Button, ButtonGroup } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios';
+
+import { fachevronCircleLeft, faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+class Interview extends Component {
+    
+    constructor(props) {
+        super(props)
+        this.state = {
+            message:'',
+            user:{
+              username : '',
+              password: ''
+            }
+        };
+      }
+      handleInputChange = (event) => {
+        let dataUser = {...this.state.user};
+        dataUser[event.target.name]=event.target.value
+        this.setState({
+          user: dataUser
+        });
+      }
+      
+      onSubmit = (event) => {
+        event.preventDefault();
+        axios.post(`http://127.0.0.1:9000/user/api/authenticate`,this.state.user)
+        .then(result => {
+                localStorage.setItem('token', result.data.token);
+                localStorage.setItem('_id', result.data.user._id);
+                this.props.history.push('/user/dashboard');
+        })
+        .catch(err =>{
+            this.setState({
+              ...this.state,
+              message: 'Terjadi kesalahan username atau password.'
+            })
+            //console.log(err)
+        })
+  
+      }
+  
+      componentDidMount() {
+        localStorage.clear();
+      }
+  
+      handleBack = () => {
+        this.props.history.goBack();
+      }
+
+    render(){
+        return(
+        <Fragment>
+            <Container style={{ marginTop:'75px' }}>
+            <ButtonGroup>
+                <Button onClick={this.handleBack}  style={{ color:'#fff' }} variant="warning"><FontAwesomeIcon icon={ faChevronCircleLeft } /></Button>
+                <Button style={{ color:'#fff' }} variant="warning" disabled>Back to Timeline</Button>
+            </ButtonGroup>
+            <br></br>
+            <br></br>
+                <Row>
+                    {/* ukuran col sm={4} md={4} lg={4} */}
+                    <Col style={{ margin:'auto' }}>
+                        <Card>
+                        <Card.Header className="text-center text-white" style={{ backgroundColor:'#FF0000'}}>Wawancara</Card.Header>
+                        <Card.Body>
+                            <p style={{ color:'red' }}>{ this.state.message }</p>
+                            <Form onSubmit={this.onSubmit}>
+                                <Form.Label><strong>Pilihan 1</strong></Form.Label>
+                                <Form.Group controlId="formBasicTime1">
+                                    <Form.Label>Waktu</Form.Label>
+                                    <Form.Control type="time" name="time1" required />
+                                    {/* <Form.Text className="text-muted">
+                                    We'll never share your email with anyone else.
+                                    </Form.Text> */}
+                                </Form.Group>
+
+                                <Form.Group controlId="formBasicDate1">
+                                    <Form.Label>Tanggal</Form.Label>
+                                    <Form.Control type="date" name="date1" required />
+                                </Form.Group>
+
+                                <Form.Group controlId="formBasicLink1">
+                                    <Form.Label>Link</Form.Label>
+                                    <Form.Control disabled as="textarea" rows="3" name="link1" value="https://..." />
+                                </Form.Group>
+
+                                <Form.Label><strong>Pilihan 2</strong></Form.Label>
+                                <Form.Group controlId="formBasicTime2">
+                                    <Form.Label>Waktu</Form.Label>
+                                    <Form.Control type="time" name="time2" required />
+                                    {/* <Form.Text className="text-muted">
+                                    We'll never share your email with anyone else.
+                                    </Form.Text> */}
+                                </Form.Group>
+
+                                <Form.Group controlId="formBasicDate2">
+                                    <Form.Label>Tanggal</Form.Label>
+                                    <Form.Control type="date" name="date2" required />
+                                </Form.Group>
+
+                                <Form.Group controlId="formBasicLink2">
+                                    <Form.Label>Link</Form.Label>
+                                    <Form.Control disabled as="textarea" rows="3" name="link2" value="https://..." />
+                                </Form.Group>
+
+                                {/* <Form.Group controlId="formBasicCheckbox">
+                                    <Form.Check type="checkbox" label="Check me out" />
+                                </Form.Group> */}
+                                <div className="text-center">
+                                <Button variant="primary" type="submit">
+                                    Submit
+                                </Button>
+                                </div>
+                            </Form>
+                        </Card.Body>
+                        {/* <Card.Footer className="text-muted">2 days ago</Card.Footer> */}
+                        </Card>
+                        <br></br><br></br><br></br>
+                    </Col>
+                </Row>
+            </Container>
+        </Fragment>)
+    }
+
+}
+
+export default Interview;
+

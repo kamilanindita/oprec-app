@@ -1,0 +1,91 @@
+
+  
+  #user-bottom, #user-top {
+    position: relative;
+  }
+  #username-bottom, #username-top {
+    color:#fff;
+    font-size: 12px;
+      position: absolute;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+    .dropup {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .dropup-content {
+      display: none;
+      position: absolute;
+      background-color: #EF0107;
+      min-width: 62px; 
+      bottom: 50px;
+      z-index: 1;
+    }
+    
+    .dropup-content a {
+      color: white;
+      padding: 2px;
+  
+      text-decoration: none;
+      display: block;
+    }
+    
+    .dropup-content a:hover {
+      text-decoration: none;
+      background-color: #EF0107;
+    }
+    
+    .dropup:hover .dropup-content {
+      display: block;
+    }
+    
+    .dropup:hover .dropbtn {
+      background-color: #EF0107;
+      border-radius: 4px;
+    }
+  
+    .navlink:hover{
+      text-decoration: none;
+    }
+    
+  
+  @media only screen and (max-width: 992px) {
+      #cart-top {
+      position: relative;
+    }
+    #cart-item-top {
+      color:#0aa3f0;
+      font-size: 14px;
+      position: absolute;
+      top: 40%;
+      left: 4%;
+      transform: translate(-50%, -50%);
+    }
+    #user-top {
+      position: relative;
+    }
+  
+    #username-top {
+      color:#fff;
+      font-size: 12px;
+      position: absolute;
+      top: 90%;
+      left: 4%;
+      transform: translate(-50%, -50%);
+    }
+    
+  
+  }
+  
+  @media only screen and (max-width: 768px) {
+    #cart-item-top {
+      left: 5.5%;
+    }
+    #username-top {
+      left: 5.5%;
+    }
+  }
